@@ -1,14 +1,27 @@
+const express = require('express')
+const mongoose = require('mongoose')
+const databaseConfig = require('./app/config/database')
+
 class App {
   constructor () {
     this.express = express()
     this.isDev = process.env.NODE_ENV !== 'production'
 
-    this.midlewares()
+    this.database()
+    this.middlewares()
     this.routes()
   }
 
-  midlewares () {
-    this.midlewares.use(express.json)
+  database () {
+    mongoose.connect(databaseConfig.uri, {
+      // databaseConfig colocado em config/database por organizacao
+      useCreateIndex: true,
+      useNewUrlParser: true
+    })
+  }
+
+  middlewares () {
+    this.express.use(express.json())
   }
 
   routes () {
