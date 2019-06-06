@@ -14,7 +14,6 @@ class App {
 
   database () {
     mongoose.connect(databaseConfig.uri, {
-      // databaseConfig colocado em config/database por organizacao
       useCreateIndex: true,
       useNewUrlParser: true
     })

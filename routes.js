@@ -1,5 +1,5 @@
 const express = require('express')
 
-const routes = express.routes
+const routes = express.Router
 
 module.exports = routes
