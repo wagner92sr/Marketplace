@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const authConfig = require('../config/auth')
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -40,10 +41,11 @@ UserSchema.methods = {
   }
 }
 
+// metodos estaticos.
 UserSchema.statics = {
   generateToken ({ id }) {
-    return jwt.sign({ id }, 'GoNode3', {
-      expiresIn: 86400
+    return jwt.sign({ id }, authConfig.secret, {
+      expiresIn: authConfig.ttl
     })
   }
 }
