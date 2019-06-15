@@ -6,14 +6,15 @@ class PurchaseController {
   async store (req, res) {
     const { ad, content } = req.body
 
-    const purchasedAd = await Ad.findById(ad).populate('author')
+    const purchaseAd = await Ad.findById(ad).populate('author')
     const user = await User.findById(req.userId)
 
     await Mail.sendMail({
       from: '"Wagner Rodrigues" <wagnerApiNode@rocketseat.com.br>',
-      to: purchasedAd.author.email,
-      subject: `Solicitação de compra ${purchasedAd.title}`,
-      html: `<p>Teste</p> ${content}`
+      to: purchaseAd.author.email,
+      subject: `Solicitação de compra ${purchaseAd.title}`,
+      template: 'purchase',
+      context: { user, content, ad: purchaseAd }
     })
 
     return res.send()
